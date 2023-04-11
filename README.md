@@ -1,10 +1,4 @@
-![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
-
 # App Countries - Versión mía con Vite - Redux Toolkit - Base de datos
-
-<p align="left">
-  <img height="200" src="./countries.png" />
-</p>
 
 🤔 Qué es?
 
