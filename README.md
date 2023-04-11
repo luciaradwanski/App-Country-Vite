@@ -74,21 +74,21 @@ Reemplazar usuariodepostgres y passwordDePostgres con tus propias credenciales p
 
 <hr>
 
-Utilice el administrador de paquetes npm para instalar. Recuerde usar este comando dentro de ./client y dentro de ./api.
-
-npm install
+Utilice el administrador de paquetes npm para instalar. Recuerde usar este comando dentro de ./src y dentro de ./api.
 
 🚧 Ejecutar local
 
 <hr>
 
--Back end: Dentro de ./api
-
+-Back end: Dentro de ./api 
+👇
+npm install
 npm start
 
--Front end: Dentro de ./client
-
-npm start
+-Front end: Dentro de ./src
+👇
+npm install
+npm run dev
 
 <hr>
 
