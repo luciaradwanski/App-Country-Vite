@@ -7,7 +7,7 @@ export const getDataActivities = createAsyncThunk('actividades/dataActivity', as
     return data;
 });
 
-export const fetchpostActivity = createAsyncThunk('actividades/postActivity', async (payload) => {
+export const axiospostActivity = createAsyncThunk('actividades/postActivity', async (payload) => {
     const {data} = await axios.post('http://localhost:3001/activities',payload);
     return data;
 });
@@ -54,15 +54,15 @@ export const activitySlice = createSlice({
             state.loading = false;
             state.isSuccess = false;
         }),
-        builder.addCase(fetchpostActivity.pending, (state, action) => {
+        builder.addCase(axiospostActivity.pending, (state, action) => {
             state.loading = true;
         }),
-        builder.addCase(fetchpostActivity.fulfilled, (state, action) => {
+        builder.addCase(axiospostActivity.fulfilled, (state, action) => {
             state.loading = false;
             state.activities.push(action.payload);
             state.alertas.push({ type: 'success', message: 'Activity created successfully', id: new Date().getTime() });
         }),
-        builder.addCase(fetchpostActivity.rejected, (state, action) => {
+        builder.addCase(axiospostActivity.rejected, (state, action) => {
             state.loading = false;
             state.alertas.push({ type: 'error', message: action.error.message, id: new Date().getTime() });
         })

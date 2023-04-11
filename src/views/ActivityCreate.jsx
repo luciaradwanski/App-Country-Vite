@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import swal from 'sweetalert';
 import { getDataCountries } from '../store/countries/countriesSlice';
+import { axiospostActivity } from '../store/activities/activitySlice';
 
 const validate = (input) => { //regex - y + que no se pueda 
     let error = {};
@@ -62,15 +63,15 @@ export default function ActivityCreate(){
 
     const handleSubmit = (e) => {
 
-        if(!input.name && !input.difficulty & !input.duration && !input.season && !input.paises.length) {
-            return swal('"Oh noes!"', "The AJAX request failed!", "error")
+        if(!input.name || !input.difficulty || !input.duration || !input.season || !input.paises.length) {
+            return swal('Cannot create Activity!', '', 'error')
         } else {
 
             e.preventDefault()
             console.log(input)
             setError(validate({...input, [e.target.name]: e.target.value}));
-            dispatch(postActivity(input))
-            swal("Created Activity", "You clicked the button!", "success")
+            dispatch(axiospostActivity(input))
+            swal("Created Activity", "", "success")
                             
             setInput({
                 name:"",
@@ -112,7 +113,7 @@ export default function ActivityCreate(){
                                         
                                 <div className='flex flex-col'>
                                     <label className='uppercase text-sm py-2'>Difficulty</label>
-                                    <input className=' border-2 rounded-lg p-3 flex border-gray-300' type='text' value={input.difficulty} name = 'difficulty' min='1' max='5' onChange={(e) => handleChange(e)}></input>                            
+                                    <input className=' border-2 rounded-lg p-3 flex border-gray-300' min="1" type='number' value={input.difficulty} name = 'difficulty' max='5' onChange={(e) => handleChange(e)}></input>                            
                                     {error.difficulty && (<p className='text-red-500 font-bold text-xs mb-5 absolute mt-24'>{error.difficulty}</p>)}
                                 </div>
                             </div>
@@ -120,7 +121,7 @@ export default function ActivityCreate(){
 
                             <div className='flex flex-col py-2'>
                                 <label className='uppercase text-sm py-2'>Duration</label>
-                                <input className='border-2 rounded-lg p-3 flex border-gray-300' type='number' value={input.duration} name = 'duration' onChange={(e) => handleChange(e)}></input>                            
+                                <input className='border-2 rounded-lg p-3 flex border-gray-300' min="1" type='number' value={input.duration} name = 'duration' onChange={(e) => handleChange(e)}></input>                            
                                 {error.duration && (<p className='text-red-500 font-bold text-xs mb-5 absolute mt-24'>{error.duration}</p>)}
                             </div>
                                 
@@ -164,9 +165,15 @@ export default function ActivityCreate(){
                     </div>
                     
                     <div>
-                        {input.paises.map((e) => (
+                        {/* {input.paises.map((e) => (
                             <ul className='rounded-2xl w-250 h-20 bg-gray-800'><h4>{e}</h4><button className='bg-gray-800 rounded-2xl w-50 h-20 text-white p-20' onClick={()=>handleDelete(e)}>X</button></ul>                          
-                        ))}               
+                        ))}                */}
+                        {input.paises && input.paises.length > 0 && input.paises.map((pais, index) => (
+                            <div key={index}>
+                                <span>{pais}</span>
+                                <button onClick={() => handleDelete(pais)}>X</button>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 
